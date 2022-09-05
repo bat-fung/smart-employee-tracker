@@ -1,1 +1,1 @@
-# smart-employee-tracker
+# SET • Smart Employee Tracker
