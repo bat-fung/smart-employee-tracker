@@ -20,8 +20,17 @@ function init() {
         init();
       })
     };
-
-
-
+    if(task=='view all roles') {
+      db.promise().query('SELECT * FROM role').then(data=>{
+        console.table(data[0]);
+        init();
+      })
+    };
+    if(task=='view all employees') {
+      db.promise().query('SELECT * FROM employee').then(data=>{
+        console.table(data[0]);
+        init();
+      })
+    };
   })
 }
