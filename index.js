@@ -31,6 +31,34 @@ function init() {
         console.table(data[0]);
         init();
       })
-    };
+    };  
+    if(task=='add a department') () => {
+      db.promise().query('INSERT INTO department(name)').then(data=>{
+        console.table(data[0]);
+      })
+      addDepartment();
+    };  
+  })  
+};
+
+function addDepartment() {
+  prompt([
+    {
+      type: 'input',
+      name: 'name',
+      message: 'Type the name of the department you would like to add.',
+      validate: nameInput => {
+        if (nameInput) {
+          return true;
+        } else {
+          console.log('Please enter the name of the department you would like to add!');
+          return false;
+        }  
+      }
+    }
+  ]).then(answers => {
+    console.log(answers);
+    const department = new Department(answers)
   })
-}
+};
+
