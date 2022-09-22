@@ -27,6 +27,7 @@ function start(){
           console.log('-------');
           console.log('Bye-bye');
           console.log('-------');
+          db.end();
           break;
         break;
       default:  
@@ -230,8 +231,8 @@ function addEmployee(){
         {
           first_name: answer.firstName,
           last_name: answer.lastName,
-          role_id: answer.role,
-          manager_id: answer.manager
+          role_id: answer.role_id,
+          manager_id: answer.manager_id
         }
       )
       console.log('---------------------------'),
@@ -253,6 +254,7 @@ function updateEmployee(){
           {
             name: 'choice',
             type: 'rawlist',
+            message: 'Select an employee to update',
             choices: function(){
               let choiceArr = [];
               for(i=0; i< results.length; i++)
@@ -260,8 +262,7 @@ function updateEmployee(){
                 choiceArr.push(results[i].last_name);
               }
               return choiceArr;
-            },
-            message: 'Select an employee to update'
+            }
           }
         ]).then(function(answer){
           // Employee is saveName
@@ -275,26 +276,26 @@ function updateEmployee(){
             {
               name: 'role',
               type: 'rawlist',
+              message: 'Select a title',
               choices: function(){
                 var choiceArr = [];
                 for(i=0; i< results.length; i++){
                   choiceArr.push(results[i].role_id)
                 }
                 return choiceArr;
-              },
-              message: 'Select a title'
+              }
             },
             {
               name: 'manager',
               type: 'number',
+              message: 'Enter new manager ID',
+              default: '1',
               validate: function(value){
                 if(isNaN(value) === false){
                   return true;
                 }
                 return false;
-              },
-              message: 'Enter new manager ID',
-              default: '1'
+              }
             }
           ]).then(function(answer){
             console.log(answer);
