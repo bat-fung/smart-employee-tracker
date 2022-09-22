@@ -1,102 +1,86 @@
-const { prompt, default: inquirer } = require('inquirer');
+const inquirer = require('inquirer');
 const cTable = require('console.table');
 const db = require('./db/connection');
 
-const promptMenu = () => {
-  return inquirer.prompt([
-    {
-      type: 'list',
-      name:'menu',
-      message: 'What would you like to do?',
-      choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role', 'finish']
-    }])
-    .then(userChoice => {
-      switch (userChoice.menu) {
-        case 'view all departments':
-          promptDepartments();
+// Application menu
+function start(){
+  inquirer
+    .prompt([
+      {
+        type: 'list',
+        name: 'start',
+        message: 'Information is available for departments, roles, and employees.  What would you like to do?',
+        choices: ['View', 'Add', 'Update', 'Exit']
+      }
+    ]).then (function(res){
+      switch(res.start){
+        case 'View':
+          view();
           break;
-        case 'view all roles':
-          promptRoles();
+        case 'Add':
+          add();
           break;
-        case 'view all employees':
-          promptEmployees();
+        case 'Update':
+          updateEmployee();
+        break;
+        case 'Exit':
+          console.log('-------');
+          console.log('Bye-bye');
+          console.log('-------');
           break;
-        case 'add a department':
-          promptAddDepartment();
-          break;
-        case 'add a role':
-          promptAddRole();
-          break;  
-        case 'add an employee':
-          promptAddEmployee();
-          break;
-        case 'update an employee role':
-          promptUpdateEmployeeRole();
-          break;
-        default:
-          finish();                   
+        break;
+      default:  
+          console.log('default');
       }
     });
-};
+}
 
+// 'View' functions
+function view(){
+  inquirer
+    .prompt([
+      {
+        type: 'list',
+        name: 'view',
+        message: 'Select an option:',
+        choices: ['All departments', 'All roles', 'All employees']
+      }
+    ]).then(function(res){
+      switch(res.view){
+        case 'All departments':
+          viewAllDepartments();
+          break;
+        case 'All roles':
+          viewAllRoles();
+          break;
+        case 'All employees':
+          viewAllEmployees();
+          break;  
+        default:
+          console.log('default');    
+      }
+    });
+}
 
-// init();
+function viewAllDepartments(){
+  db.promise().query('SELECT * FROM department').then(data=>{
+    console.table(data[0]);
+    start();
+  })
+}
 
-// function init() {
-//   prompt([
-//     {
-//       type: 'list',
-//       name: 'task',
-//       message: 'What would you like to do?',
-//       choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role']
-//     }
-//   ]).then(({task})=>{
+function viewAllRoles(){
+  db.promise().query('SELECT * FROM role').then(data=>{
+    console.table(data[0]);
+    start();
+  })
+}
 
-//     if(task=='view all departments') {
-//       db.promise().query('SELECT * FROM department').then(data=>{
-//         console.table(data[0]);
-//         init();
-//       })
-//     };
-//     if(task=='view all roles') {
-//       db.promise().query('SELECT * FROM role').then(data=>{
-//         console.table(data[0]);
-//         init();
-//       })
-//     };
-//     if(task=='view all employees') {
-//       db.promise().query('SELECT * FROM employee').then(data=>{
-//         console.table(data[0]);
-//         init();
-//       })
-//     };  
-//     if(task=='add a department') () => {
-//       db.promise().query('INSERT INTO department(name)').then(data=>{
-//         console.table(data[0]);
-//       })
-//       addDepartment();
-//     };  
-//   })  
-// };
+function viewAllEmployees(){
+  db.promise().query('SELECT * FROM employee').then(data=>{
+    console.table(data[0]);
+    start();
+  })
+}
 
-// function addDepartment() {
-//   prompt([
-//     {
-//       type: 'input',
-//       name: 'name',
-//       message: 'Type the name of the department you would like to add.',
-//       validate: nameInput => {
-//         if (nameInput) {
-//           return true;
-//         } else {
-//           console.log('Please enter the name of the department you would like to add!');
-//           return false;
-//         }  
-//       }
-//     }
-//   ]).then(answers => {
-//     console.log(answers);
-//     const department = new Department(answers)
-//   })
-// };
-
+start();
