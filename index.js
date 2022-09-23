@@ -243,6 +243,8 @@ function addEmployee(){
   });
 }
 
+
+
 // 'Update' functions
 function updateEmployee(){
   // Select an employee to update
@@ -254,7 +256,6 @@ function updateEmployee(){
           {
             name: 'choice',
             type: 'rawlist',
-            message: 'Select an employee to update',
             choices: function(){
               let choiceArr = [];
               for(i=0; i< results.length; i++)
@@ -262,7 +263,8 @@ function updateEmployee(){
                 choiceArr.push(results[i].last_name);
               }
               return choiceArr;
-            }
+            },
+            message: 'Select an employee to update',
           }
         ]).then(function(answer){
           // Employee is saveName
@@ -276,26 +278,26 @@ function updateEmployee(){
             {
               name: 'role',
               type: 'rawlist',
-              message: 'Select a title',
               choices: function(){
                 var choiceArr = [];
                 for(i=0; i< results.length; i++){
-                  choiceArr.push(results[i].role_id)
+                  choiceArr.push(results[i].title)
                 }
                 return choiceArr;
-              }
+              },
+              message: 'Select a title',
             },
             {
               name: 'manager',
               type: 'number',
-              message: 'Enter new manager ID',
-              default: '1',
               validate: function(value){
                 if(isNaN(value) === false){
                   return true;
                 }
                 return false;
-              }
+              },
+              message: 'Enter new manager ID',
+              default: '1'
             }
           ]).then(function(answer){
             console.log(answer);
@@ -315,7 +317,7 @@ function updateEmployee(){
           });  
         })
       })
-    })  
-  }
+    })
+}
 
 start();
