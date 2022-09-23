@@ -12,7 +12,7 @@
   - [License](#license)
 
   ## Description 
-  "SET" is designed for business owners who need an efficient method for department, role, and employee tracking.<br><a href="https://drive.google.com/file/d/1nxwRxMb1fgQIQUNIUyLAYytJe4Zop__y/view?usp=sharing">Walkthrough Video</a>
+  "SET" is designed for business owners who need an efficient method for department, role, and employee tracking.<br><a href="https://drive.google.com/file/d/1nxwRxMb1fgQIQUNIUyLAYytJe4Zop__y/view?usp=sharing">Click here to view a walkthrough video.</a>
   
   ## Installation 
   <br>1. Node.js (npm init)<br>2. npm i inquirer@8.2.4<br>3. npm i mysql2@2.3.3<br>4. npm i console.table@0.10.0<br>5. npm i dotenv@16.0.2
