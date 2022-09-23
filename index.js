@@ -243,8 +243,6 @@ function addEmployee(){
   });
 }
 
-
-
 // 'Update' functions
 function updateEmployee(){
   // Select an employee to update
